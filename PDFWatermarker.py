@@ -4,15 +4,13 @@ from PDFWriter import PDFWriter
 
 class PDFWatermarker:
     def __init__(self):
-        self.watermark_page: PageObject = None
+        self.watermark_pdf_path: str = ''
         self.actual_pages: list = list([])
         self.watermarked_pages: list = list([])
 
     #     This method takes in path of PDF of image to be used as a watermark
     def set_watermark(self, path: str):
-        reader = PDFReader()
-        reader.read_pdf(path)
-        self.watermark_page = reader.get_pages()[0]
+        self.watermark_pdf_path = path
 
     def read_pdf(self, path: str):
         reader = PDFReader()
@@ -21,7 +19,12 @@ class PDFWatermarker:
 
     def add_watermark_to_pdf(self):
         for page in self.actual_pages:
-            temp_page = self.watermark_page
+            # creating new watermark PageObject each time loop runs
+            reader = PDFReader()
+            reader.read_pdf(self.watermark_pdf_path)
+            temp_page = reader.get_pages()[0]
+
+            # merging and adding page to list
             temp_page.merge_page(page)
             self.watermarked_pages.append(temp_page)
 
