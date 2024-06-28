@@ -18,7 +18,9 @@ class ImageToPDF:
         folder_content = os.listdir(path)
         for item_path in folder_content:
             if item_path.endswith('.png') or item_path.endswith('.jpg') or item_path.endswith('.jpeg'):
-                self.add_image(item_path)
+                img_path = os.path.join(path, item_path)
+                print(img_path)
+                self.image_paths.append(img_path)
 
     def create_pdf(self, output_path: str, file_name: str):
         save_path = os.path.join(output_path, f"{file_name}.pdf")
@@ -32,7 +34,7 @@ class ImageToPDF:
         for img_path in self.image_paths[1:]:
             remaining_images.append(Image.open(img_path).convert('RGB'))
 
-        first_image.save(save_path, save_all=True, append=remaining_images)
+        first_image.save(save_path, save_all=True, append_images=remaining_images)
 
     def clear_images(self):
         self.image_paths = list([])
