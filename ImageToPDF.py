@@ -13,9 +13,12 @@ class ImageToPDF:
 
         self.image_paths.append(path)
 
+    # add all image files from specified directory to image list
     def add_all_directory_images(self, path: str):
-        for pdf_path in path:
-            self.add_image(pdf_path)
+        folder_content = os.listdir(path)
+        for item_path in folder_content:
+            if item_path.endswith('.png') or item_path.endswith('.jpg') or item_path.endswith('.jpeg'):
+                self.add_image(item_path)
 
     def create_pdf(self, output_path: str, file_name: str):
         save_path = os.path.join(output_path, f"{file_name}.pdf")
