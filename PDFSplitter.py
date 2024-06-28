@@ -9,10 +9,10 @@ class PDFSplitter:
     def read_pdf(self, path: str):
         reader = PDFReader()
         reader.read_pdf(path)
-        self.pages = list([])
+        self.pages = reader.get_pages()
 
     def split_by_range(self, output_path: str, file_name: str, first_page: int, last_page: int):
-        if first_page<0 or last_page<0:
+        if first_page<1 or last_page<1:
             raise Exception("Invalid range selection!")
         elif first_page>last_page:
             raise Exception("Bad Range selection!")
@@ -24,13 +24,17 @@ class PDFSplitter:
         writer.add_pages(self.pages)
         writer.write_pdf(output_path=output_path, file_name=file_name)
 
-    def split_by_pages(self, output_path: str, file_name: str, *args: set):
-        if max(args) > len(self.pages):
-            raise Exception(f"Page {max(args)} does NOT exist in PDF!")
+    # make a new PDF having specified pages in specified order
+    # pages: list = hold order of pages to be added in new PDF
+    def split_by_pages(self, output_path: str, file_name: str, *pages: int):
+        if min(pages) < 1:
+            raise Exception(f"Page {min(pages)} is invalid!")
+        if max(pages) > len(self.pages):
+            raise Exception(f"Page {max(pages)} does NOT exist in PDF!")
+
         temp: list = list([])
-        for i in range(len(self.pages)):
-            if i+1 in args:
-                temp.append(self.pages[i]) # adding pages whose index+1 corresponds to requested page
+        for page_num in pages:
+            temp.append(self.pages[page_num - 1])
         writer = PDFWriter()
-        writer.add_pages(self.pages)
+        writer.add_pages(temp)
         writer.write_pdf(output_path=output_path, file_name=file_name)

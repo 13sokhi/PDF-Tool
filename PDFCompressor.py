@@ -12,8 +12,10 @@ class PDFCompressor:
         self.actual_pages = reader.get_pages()
 
     def compress_pdf(self):
+        self.compressed_pages = list([])
         for page in self.actual_pages:
-            self.compressed_pages.append(page.compress_content_streams())
+            page.compress_content_streams()
+            self.compressed_pages.append(page)
 
     def create_compressed_pdf(self, output_path: str, file_name: str):
         writer = PDFWriter()
