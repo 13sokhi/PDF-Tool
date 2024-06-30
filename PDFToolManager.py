@@ -28,7 +28,7 @@ def merge_pdfs():
 
             print("\n\033[32m" + f'{i - 1} PDF:')
             for pdf_path in pdf_paths:
-                print("\033[32m" + pdf_path)
+                print("\t\033[32m" + pdf_path)
             print("\033[32m" + f'merged at {os.path.join(output_path, f"{file_name}.pdf")}')
             return
         else:
@@ -281,7 +281,7 @@ def main():
         try:
             match feature:
                 case 0:
-                    print("\033[36m" + '\nProgram Ends...')
+                    print("\033[36m" + '\nProgram Ends...' + "\033[0m")
                     break
                 case 1:
                     merge_pdfs()
