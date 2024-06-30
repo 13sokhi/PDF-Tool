@@ -10,7 +10,6 @@ class PDFWriter:
 
     def write_pdf(self, output_path: str, file_name: str, protected=False, password=None):
         save_path = os.path.join(output_path, f"{file_name}.pdf")
-        print(save_path)
         if not os.path.exists(output_path):
             raise Exception(f"{output_path} does NOT exist!")
         elif not os.path.isdir(output_path):

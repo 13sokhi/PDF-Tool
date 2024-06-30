@@ -25,11 +25,6 @@ class PDFRotator:
         for i in range(len(self.pages)):
             self.rotate_page(i+1, rotation)
 
-        # if rotation % 90 != 0:
-        #     raise Exception("Rotate only by a factor of 90!")
-        # for i in range(len(self.pages)):
-        #     self.pages[i].rotate(90)
-
     def create_modified_pdf(self, output_path: str, file_name: str):
         writer = PDFWriter()
         writer.add_pages(self.pages)

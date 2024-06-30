@@ -1,3 +1,5 @@
+import os.path
+
 from PyPDF2 import PageObject
 from PDFReader import PDFReader
 from PDFWriter import PDFWriter
@@ -10,6 +12,10 @@ class PDFWatermarker:
 
     #     This method takes in path of PDF of image to be used as a watermark
     def set_watermark(self, path: str):
+        if not os.path.exists(path):
+            raise Exception(f'{path} does not exist!')
+        elif not path.endswith('.pdf'):
+            raise Exception('Only PDF files supported!')
         self.watermark_pdf_path = path
 
     def read_pdf(self, path: str):

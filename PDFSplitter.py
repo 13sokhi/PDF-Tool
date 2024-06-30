@@ -26,7 +26,7 @@ class PDFSplitter:
 
     # make a new PDF having specified pages in specified order
     # pages: list = hold order of pages to be added in new PDF
-    def split_by_pages(self, output_path: str, file_name: str, *pages: int):
+    def split_by_pages(self, output_path: str, file_name: str, pages: list):
         if min(pages) < 1:
             raise Exception(f"Page {min(pages)} is invalid!")
         if max(pages) > len(self.pages):
