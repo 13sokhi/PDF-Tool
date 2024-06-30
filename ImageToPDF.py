@@ -8,19 +8,22 @@ class ImageToPDF:
     def add_image(self, path: str):
         if not os.path.isfile(path):
             raise Exception("Only select Image files!")
-        elif not path.endswith('.png') or not path.endswith('.jpg') or not path.endswith('.jpeg'):
+        elif not path.endswith('.png') and not path.endswith('.jpg') and not path.endswith('.jpeg'):
             raise Exception("Only select .png/.jpg/.jpeg files!")
 
         self.image_paths.append(path)
 
     # add all image files from specified directory to image list
     def add_all_directory_images(self, path: str):
+        self.clear_images()
+        if not os.path.exists(path):
+            raise Exception(f'Directory {path} does NOT exist!')
         folder_content = os.listdir(path)
         for item_path in folder_content:
             if item_path.endswith('.png') or item_path.endswith('.jpg') or item_path.endswith('.jpeg'):
                 img_path = os.path.join(path, item_path)
-                print(img_path)
                 self.image_paths.append(img_path)
+        return self.image_paths
 
     def create_pdf(self, output_path: str, file_name: str):
         save_path = os.path.join(output_path, f"{file_name}.pdf")
